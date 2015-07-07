@@ -22,12 +22,17 @@ var app = {
 		this.bindEvents();
 		var self=this;
 		this.store=new MemoryStore(function(){
-			self.renderHomeView();
+			 $('body').html(new HomeView(self.store).render().el);
 		});
 		
 		this.store = new MemoryStore(function() {
 	        self.showAlert('Store Initialized', 'Info');
 	    });
+		
+		this.homeTpl = Handlebars.compile($("#home-tpl").html());
+		this.employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
+		
+		
 	},
 	// Bind Event Listeners
 	//
@@ -60,12 +65,6 @@ var app = {
 	    } else {
 	        alert(title ? (title + ": " + message) : message);
 	    }
-	},
-	renderHomeView : function() {
-		var html = "<div class='header'><h1>Home</h1></div>"
-				+ "<div class='search-view'>" + "<input class='search-key'/>"
-				+ "<ul class='employee-list'></ul>" + "</div>";
-		$('body').html(html);
-		$('.search-key').on('keyup', $.proxy(this.findByName, this));
 	}
+	,
 };

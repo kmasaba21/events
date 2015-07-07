@@ -22,7 +22,7 @@ var app = {
 		this.bindEvents();
 		var self=this;
 		this.store=new MemoryStore(function(){
-			self.renderHomeView();
+			 $('body').html(new HomeView(self.store).render().el);
 		});
 		
 		this.store = new MemoryStore(function() {
@@ -65,16 +65,6 @@ var app = {
 	    } else {
 	        alert(title ? (title + ": " + message) : message);
 	    }
-	},
-	renderHomeView : function() {
-		 $('body').html(this.homeTpl());
-		
-		$('.search-key').on('keyup', $.proxy(this.findByName, this));
-	},
-	findByName: function() {
-	    var self = this;
-	    this.store.findByName($('.search-key').val(), function(employees) {
-	        $('.employee-list').html(self.employeeLiTpl(employees));
-	    });
-	},
+	}
+	,
 };
